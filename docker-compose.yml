@@ -1,0 +1,10 @@
+version: '2.1'
+
+services:
+  notebooks:
+    image: lballabio/quantlib-notebook
+    volumes:
+      - .:/notebooks
+    ports:
+      - "8888:8888"
+
