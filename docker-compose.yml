@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   notebooks:
-    image: lballabio/quantlib-notebook
+    image: lballabio/jupyter
     volumes:
       - .:/notebooks
     ports:
