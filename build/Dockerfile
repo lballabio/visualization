@@ -2,7 +2,7 @@ FROM python:slim
 MAINTAINER Luigi Ballabio <luigi.ballabio@gmail.com>
 LABEL Description="A slim Jupyter notebook server"
 
-RUN pip install --no-cache-dir jupyter matplotlib numpy scipy pandas
+RUN pip install --no-cache-dir jupyter matplotlib numpy scipy pandas xlrd openpyxl
 
 EXPOSE 8888
 
