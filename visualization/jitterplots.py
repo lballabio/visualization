@@ -16,18 +16,23 @@ def _spaced(N, x, dx):
 def _rows(N, n_max):
     return N//n_max + (1 if N%n_max else 0)
 
-def _ns(N, n_max):
-    m = _rows(N, n_max)
-    n = N // m
-    r = N % m
-    return [n+1]*r + [n]*(m-r)
+def _ns(N, n_max, fixed_n=False):
+    if fixed_n:
+        m = N // n_max
+        r = N % n_max
+        return [n_max]*m + ([r] if r else [])
+    else:
+        m = _rows(N, n_max)
+        n = N // m
+        r = N % m
+        return [n+1]*r + [n]*(m-r)
 
 def _shifts(N, n_max, dy):
     return _spaced(_rows(N, n_max), 0.0, dy)
 
-def regular_xy(N, x, y, n_max=10, dx=0.1, dy=0.25):
+def regular_xy(N, x, y, n_max=10, dx=0.1, dy=0.25, fixed_n=False):
     "Generates N regularly-spaced points around (x,y)"
-    groups = zip(_ns(N, n_max),
+    groups = zip(_ns(N, n_max, fixed_n),
                  _shifts(N, n_max, dy))
     ps = []
     for n,dy in groups:
