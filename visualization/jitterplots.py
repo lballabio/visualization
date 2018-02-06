@@ -43,29 +43,36 @@ def jittered_xy(N, x, y, width_x=0.9, width_y=0.9):
 
 
 def jitter_plot(ax, data, jitter=True, highlights=None,
-                markersize=None, **kwargs):
-    label_tag, value_tag, count_tag = data.columns
-    labels = sorted(set(data[label_tag]))
-    idx = numpy.arange(len(labels))
+                markersize=None, show_columns=True, show_rows=False,
+                **kwargs):
+    x_tag, y_tag, count_tag = data.columns
+    x_labels = sorted(set(data[x_tag]))
+    idx = numpy.arange(len(x_labels))
     ax.set_xlim(idx[0]-0.5, idx[-1]+0.5)
     ax.set_xticks(idx)
-    ax.set_xticklabels(labels, fontsize=14)
-    ax.xaxis.set_minor_locator(ticker.AutoMinorLocator(2))
-    ax.xaxis.grid(True, 'minor', color='#999999')
+    ax.set_xticklabels(x_labels, fontsize=14)
+    if show_columns:
+        ax.xaxis.set_minor_locator(ticker.AutoMinorLocator(2))
+        ax.xaxis.grid(True, 'minor', color='#999999')
 
-    max_n = data[value_tag].max()
-    idy = numpy.arange(max_n+1)
+    y_labels = sorted(set(data[y_tag]))
+    idy = numpy.arange(len(y_labels))
     ax.set_ylim(idy[0]-0.5, idy[-1]+0.5)
     ax.set_yticks(idy)
     ax.set_yticklabels(idy, fontsize=14)
+    if show_rows:
+        ax.yaxis.set_minor_locator(ticker.AutoMinorLocator(2))
+        ax.yaxis.grid(True, 'minor', color='#999999')
 
     f = jittered_xy if jitter else regular_xy
-    for l in labels:
+    for l in x_labels:
         points = []
-        column = data[data[label_tag] == l]
-        x = labels.index(l)
-        for y,c in zip(column[value_tag],column[count_tag]):
-            points += f(c, x, y, **kwargs)
+        column = data[data[x_tag] == l]
+        x = x_labels.index(l)
+        for y,c in zip(column[y_tag],column[count_tag]):
+            if c > 0:
+                y = y_labels.index(y)
+                points += f(c, x, y, **kwargs)
         xs, ys = zip(*sorted(points, key=lambda x: (x[1],x[0])))
         ax.plot(xs, ys, 'o', color='white',
                 markersize=markersize, markeredgecolor='0.3')
