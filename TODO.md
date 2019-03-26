@@ -3,3 +3,5 @@
 - Bump chart/bump area chart (https://public.tableau.com/profile/neil.richards#!/vizhome/co2bump/Dashboard1)
 - Marimekko chart (https://questionsindataviz.com/2017/04/03/what-is-a-marimekko-chart-and-when-should-you-use-one/)
 - Joy plot (https://questionsindataviz.com/2017/07/25/where-is-the-joy/)
+- Sankey diagram
+- Chord diagram
